@@ -47,6 +47,7 @@ function! godebug#toggleBreakpoint(file, line, ...) abort
     call remove(g:godebug_breakpoints, i)
     exe "sign unplace ". a:line ." file=" . a:file
   endif
+  call godebug#writeBreakpointsFile()
 endfunction
 
 function! godebug#writeBreakpointsFile() abort
@@ -79,12 +80,10 @@ function! godebug#deleteBreakpointsFile(...) abort
 endfunction
 
 function! godebug#debug(bang, ...) abort
-  call godebug#writeBreakpointsFile()
   return go#term#new(a:bang, ["dlv", "debug", "--init=" . g:godebug_breakpoints_file], "%-G#\ %.%#")
 endfunction
 
 function! godebug#debugtest(bang, ...) abort
-  call godebug#writeBreakpointsFile()
   return go#term#new(a:bang, ["dlv", "test", "--init=" . g:godebug_breakpoints_file], "%-G#\ %.%#")
 endfunction
 
