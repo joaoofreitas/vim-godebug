@@ -62,7 +62,7 @@ function! godebug#loadBreakpointsFile()
     else
 	echo "No debug file was found"
 	echo "Creating new debug file"
-	call godebug#writeBreakpointsFile
+	call godebug#writeBreakpointsFile()
     endif
     call godebug#drawBreakpoints()
 endfunction
