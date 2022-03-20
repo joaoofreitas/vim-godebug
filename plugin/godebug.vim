@@ -20,8 +20,9 @@ function! godebug#init()
         let g:godebug_breakpoints = []
     endif
     
-    if filereadable("g:godebug_breakpoints_file")
+    if filereadable(g:godebug_breakpoints_file)
         let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
+	echo "Debug file readed sucessfully"
     endif
 endfunction
 
@@ -52,7 +53,7 @@ function! godebug#writeBreakpointsFile() abort
 endfunction
 
 function! godebug#loadBreakpointsFile()
-    if filereadable("g:godebug_breakpoints_file")
+    if filereadable(g:godebug_breakpoints_file)
        let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
        echo g:godebug_breakpoints
     else
