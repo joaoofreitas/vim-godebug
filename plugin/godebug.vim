@@ -55,7 +55,7 @@ function! godebug#writeBreakpointsFile() abort
 endfunction
 
 function! godebug#loadBreakpointsFile()
-    if exists("g:godebug_breakpoints_file")
+    if filereadable("g:godebug_breakpoints_file")
        let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
        echo g:godebug_breakpoints
     else
