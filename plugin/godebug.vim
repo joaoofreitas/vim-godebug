@@ -10,14 +10,8 @@ if exists("g:godebug_loaded_install")
 endif
 let g:godebug_loaded_install = 1
 
-" Set a global list of breakpoints, if not already exist
 
-" make cache base path overridable
-if !exists("g:godebug_cache_path")
-  let g:godebug_cache_path = getcwd()
-endif
-
-let g:godebug_breakpoints_file = g:godebug_cache_path . "/debug"
+let g:godebug_breakpoints_file = getcwd() . "/debug"
 if !exists("g:godebug_breakpoints")
     let g:godebug_breakpoints = []
 endif
@@ -27,7 +21,7 @@ if filereadable("g:godebug_breakpoints_file")
 endif
 
 "autocmd VimLeave * call godebug#deleteBreakpointsFile()
-"autocmd FileType go call godebug#loadBreakpointsFile()
+autocmd FileType go call godebug#loadBreakpointsFile()
 
 " Private functions
 function! godebug#toggleBreakpoint(file, line, ...) abort
