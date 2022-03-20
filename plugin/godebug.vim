@@ -27,6 +27,7 @@ call mkdir(g:godebug_cache_path, "p")
 let g:godebug_breakpoints_file = g:godebug_cache_path . "/debug"
 
 "autocmd VimLeave * call godebug#deleteBreakpointsFile()
+autocmd FileType go call godebug#loadBreakpointsFile()
 
 " Private functions
 function! godebug#toggleBreakpoint(file, line, ...) abort
@@ -89,7 +90,6 @@ endfunction
 
 command! -nargs=* -bang GoToggleBreakpoint call godebug#toggleBreakpoint(expand('%:p'), line('.'), <f-args>)
 command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpointsFile()
-command! -nargs=* -bang GoDrawBreakpoints call godebug#drawBreakpoints()
 command! -nargs=* -bang GoDebug call godebug#debug(<bang>0, 0, <f-args>)
 command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args>)
 
