@@ -85,7 +85,7 @@ function! godebug#debugtest(bang, ...) abort
 endfunction
 
 command! -nargs=* -bang GoToggleBreakpoint call godebug#toggleBreakpoint(expand('%:p'), line('.'), <f-args>)
-command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpoints(<f-args>)
+command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpointsFile(<f-args>)
 command! -nargs=* -bang GoDrawBreakpoints call godebug#drawBreakpoints(<f-args>)
 command! -nargs=* -bang GoDebug call godebug#debug(<bang>0, 0, <f-args>)
 command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args>)
