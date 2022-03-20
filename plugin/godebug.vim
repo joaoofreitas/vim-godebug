@@ -11,17 +11,20 @@ endif
 let g:godebug_loaded_install = 1
 
 " Set a global list of breakpoints, if not already exist
-if !exists("g:godebug_breakpoints")
-  let g:godebug_breakpoints = []
+
+if filereadable("g:godebug_breakpoints_file")
+    if !exists("g:godebug_breakpoints")
+	let g:godebug_breakpoints = []
+    endif
+    let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
+else
+    call writefile(["continue"], g:godebug_breakpoints_file)
 endif
 
 " make cache base path overridable
 if !exists("g:godebug_cache_path")
   let g:godebug_cache_path = getcwd()
 endif
-
-" make sure cache base path exists
-call mkdir(g:godebug_cache_path, "p")
 
 let g:godebug_breakpoints_file = g:godebug_cache_path . "/debug"
 
@@ -92,12 +95,4 @@ endfunction
 command! -nargs=* -bang GoToggleBreakpoint call godebug#toggleBreakpoint(expand('%:p'), line('.'), <f-args>)
 command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpointsFile()
 command! -nargs=* -bang GoDebug call godebug#debug(<bang>0, 0, <f-args>)
-command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args>)
-
-" Notes
-"
-" let currentDirectory = getcwd()
-"
-"
-"
-"
+command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args)
