@@ -27,7 +27,7 @@ if filereadable("g:godebug_breakpoints_file")
 endif
 
 "autocmd VimLeave * call godebug#deleteBreakpointsFile()
-autocmd FileType go call godebug#loadBreakpointsFile()
+"autocmd FileType go call godebug#loadBreakpointsFile()
 
 " Private functions
 function! godebug#toggleBreakpoint(file, line, ...) abort
