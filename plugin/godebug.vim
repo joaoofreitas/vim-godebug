@@ -49,11 +49,11 @@ function! godebug#toggleBreakpoint(file, line, ...) abort
   endif
 endfunction
 
-function! godebug#writeBreakpointsFile(...) abort
+function! godebug#writeBreakpointsFile() abort
   call writefile(g:godebug_breakpoints + ["continue"], g:godebug_breakpoints_file)
 endfunction
 
-function! godebug#loadBreakpointsFile(...) abort
+function! godebug#loadBreakpointsFile()
     if exists("g:godebug_breakpoints_file")
        g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
     else
@@ -61,7 +61,7 @@ function! godebug#loadBreakpointsFile(...) abort
     endif
 endfunction
 
-function! godebug#drawBreakpoints(...) abort
+function! godebug#drawBreakpoints() abort
     exe "sign define gobreakpoint text=◉ texthl=Search"
     for e in g:godebug_breakpoints	
 	exe "sign place ". str2nr(matchstr(e, '[0-9]\+'),10) ." line=" . str2nr(matchstr(e, '[0-9]\+'),10)  . " name=gobreakpoint file=" . expand('%:p')
@@ -85,8 +85,8 @@ function! godebug#debugtest(bang, ...) abort
 endfunction
 
 command! -nargs=* -bang GoToggleBreakpoint call godebug#toggleBreakpoint(expand('%:p'), line('.'), <f-args>)
-command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpointsFile(<f-args>)
-command! -nargs=* -bang GoDrawBreakpoints call godebug#drawBreakpoints(<f-args>)
+command! -nargs=* -bang GoLoadBreakpoints call godebug#loadBreakpointsFile()
+command! -nargs=* -bang GoDrawBreakpoints call godebug#drawBreakpoints()
 command! -nargs=* -bang GoDebug call godebug#debug(<bang>0, 0, <f-args>)
 command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args>)
 
