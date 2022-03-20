@@ -24,8 +24,6 @@ endif
 
 if filereadable("g:godebug_breakpoints_file")
     let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
-else
-    call writefile(["continue"], g:godebug_breakpoints_file)
 endif
 
 "autocmd VimLeave * call godebug#deleteBreakpointsFile()
