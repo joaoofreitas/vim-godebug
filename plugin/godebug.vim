@@ -1,9 +1,7 @@
-" vim-godebug.vim - Go debugging for Vim
-" Maintainer:    Luca Guidi <https://lucaguidi.com>
-" Version:       0.1
+
 
 if !has("nvim")
-  echom "vim-godebug: vim is not yet supported, try it with neovim"
+  echo "vim-godebug: vim is not yet supported, try it with neovim"
   finish
 endif
 
@@ -19,19 +17,18 @@ endif
 
 " make cache base path overridable
 if !exists("g:godebug_cache_path")
-  " this will probably suck for people using windows ...
-  let g:godebug_cache_path = $HOME . "/.cache/" . v:progname . "/vim-godebug"
+  let g:godebug_cache_path = getcwd()
 endif
 
 " make sure cache base path exists
 call mkdir(g:godebug_cache_path, "p")
 
 " create a reasonably unique breakpoints file path per vim instance
-let g:godebug_breakpoints_file = g:godebug_cache_path . "/". getpid() . localtime()
+let g:godebug_breakpoints_file = g:godebug_cache_path . "/debug"
 
-"autocmd VimLeave * call godebug#deleteBreakpointsFile()<cr>
+"autocmd VimLeave * call godebug#deleteBreakpointsFile()
 
-" Private functions {{{1
+" Private functions
 function! godebug#toggleBreakpoint(file, line, ...) abort
   " Compose the breakpoint for delve:
   " Example: break /home/user/path/to/go/file.go:23
@@ -75,3 +72,11 @@ endfunction
 command! -nargs=* -bang GoToggleBreakpoint call godebug#toggleBreakpoint(expand('%:p'), line('.'), <f-args>)
 command! -nargs=* -bang GoDebug call godebug#debug(<bang>0, 0, <f-args>)
 command! -nargs=* -bang GoDebugTest call godebug#debugtest(<bang>0, 0, <f-args>)
+
+" Notes
+"
+" let currentDirectory = getcwd()
+"
+"
+"
+"
