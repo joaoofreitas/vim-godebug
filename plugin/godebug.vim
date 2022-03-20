@@ -10,20 +10,22 @@ if exists("g:godebug_loaded_install")
 endif
 let g:godebug_loaded_install = 1
 
-
-let g:godebug_breakpoints_file = getcwd() . "/debug"
-if !exists("g:godebug_breakpoints")
-    let g:godebug_breakpoints = []
-endif
-
-if filereadable("g:godebug_breakpoints_file")
-    let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
-endif
-
 "autocmd VimLeave * call godebug#deleteBreakpointsFile()
-autocmd FileType go call godebug#loadBreakpointsFile()
+autocmd FileType go call godebug#init()
 
 " Private functions
+function! godebug#init()
+    let g:godebug_breakpoints_file = getcwd() . "/debug"
+    if !exists("g:godebug_breakpoints")
+        let g:godebug_breakpoints = []
+    endif
+    
+    if filereadable("g:godebug_breakpoints_file")
+        let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
+    endif
+endfunction
+
+
 function! godebug#toggleBreakpoint(file, line, ...) abort
   " Compose the breakpoint for delve:
   " Example: break /home/user/path/to/go/file.go:23
