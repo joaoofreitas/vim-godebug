@@ -56,15 +56,19 @@ endfunction
 function! godebug#loadBreakpointsFile()
     if exists("g:godebug_breakpoints_file")
        let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
+       echo g:godebug_breakpoints
     else
 	echo "No debug file was found"
     endif
+    call godebug#drawBreakpoints()
 endfunction
 
-function! godebug#drawBreakpoints() abort
+function! godebug#drawBreakpoints()
     exe "sign define gobreakpoint text=◉ texthl=Search"
-    for e in g:godebug_breakpoints	
-	exe "sign place ". str2nr(matchstr(e, '[0-9]\+'),10) ." line=" . str2nr(matchstr(e, '[0-9]\+'),10)  . " name=gobreakpoint file=" . expand('%:p')
+    for e in g:godebug_breakpoints
+	if e !~ "continue"
+	    exe "sign place ". str2nr(matchstr(e, '[0-9]\+'),10) ." line=" . str2nr(matchstr(e, '[0-9]\+'),10)  . " name=gobreakpoint file=" . expand('%:p')
+	endif
     endfor
 endfunction
 
