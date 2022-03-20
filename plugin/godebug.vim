@@ -55,7 +55,7 @@ endfunction
 
 function! godebug#loadBreakpointsFile()
     if exists("g:godebug_breakpoints_file")
-       g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
+       let g:godebug_breakpoints = readfile(g:godebug_breakpoints_file)
     else
 	echo "No debug file was found"
     endif
